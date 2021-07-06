@@ -1,0 +1,20 @@
+.App {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  flex: 1;
+}
+
+.header_title {
+  width: 642px;
+  height: 56px;
+  font-weight: 300;
+  font-size: 48px;
+  line-height: 55.68px;
+  text-align: center;
+  margin-top: 5vw;
+}
+
+p {
+  color: #261E4B;
+}
