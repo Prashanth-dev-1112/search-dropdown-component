@@ -15,9 +15,14 @@ const SearchbarDropdown = (props) => {
         }
     }
 
+    const getLocation = (e) => {
+        if (e.target.parentElement.parentElement.previousSibling.defaultValue !== '') {
+                props.selectedSuburb(e.target.parentElement.parentElement.previousSibling.defaultValue);
+        }
+    }
+
     const disableList = (disable) => {
         setIsDisabled(disable);
-        props.searchKeyword('');
     }
 
     const renderSearchList = props.suburbs.map((suburb, index) => {
@@ -34,8 +39,12 @@ const SearchbarDropdown = (props) => {
     return (
         <div className=" search_control">
             <div className="search_container">
-                <input id="input_txt" className="input_control" type="text" placeholder="Search for your suburb..." value={props.term} onChange={getSearchTerm} />
-                <button className="search_btn">Search<FaSistrix className="search_icon" /></button>
+                <input className="input_control" type="text" placeholder="Search for your suburb..." value={props.term} onChange={getSearchTerm} />
+                <div className="btn_container" onClick={getLocation}>
+                    <div className="btn_inner">
+                        <button className="search_btn" >Search</button><FaSistrix className="search_icon" />
+                    </div>
+                </div>
             </div>
             <div className="search_list">
                 {renderSearchList.length > 0 && isDisabled

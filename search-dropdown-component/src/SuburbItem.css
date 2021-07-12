@@ -2,11 +2,12 @@
     list-style-type: none;
     border-top: 1px solid #E5E5E5;
     vertical-align: middle;
-    padding-top: 10px;
-    padding-bottom: 10px;
     margin-bottom: 0px;
     display: flex;
     flex-direction: row;
+    width: 642px;
+    height: 55px;
+    padding-left: 0px;
 }
 
 .item:hover {
@@ -18,11 +19,7 @@
     width: 11.64px;
     height: 16.64px;
     vertical-align: middle;
-}
-
-.detail_item {
-    padding-left: 15px;
-    cursor: pointer;
+    margin: 19.68px 15.49px 18.68px 17.18px;
 }
 
 .item_suburb {
@@ -32,6 +29,8 @@
     font-size: 14px;
     line-height: 20.72px;
     color: #403F5C;
+    margin: 10px 337.08px 0px 0px;
+    cursor: pointer;
 }
 
 .item_city {
@@ -39,4 +38,5 @@
     font-weight: 400;
     line-height: 17.76px;
     color: #787896;
+    margin: 0px 337.08px 9px 0px;
 }

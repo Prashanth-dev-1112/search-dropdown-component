@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import './App.css';
 import GoogleMap from './GoogleMap';
 import SearchbarDropdown from './SearchbarDropdown';
@@ -8,46 +8,33 @@ function App() {
   const [suburbs, setSuburbs] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [locationSuburb, setLocationSuburb] = useState([]);
-  const [searchResults, setSearchResults] = useState([]);
 
-  useEffect(() => {
-    const getData = async () => {
-      const dataFromServer = await fetchData();
-      setSuburbs(dataFromServer.items);
+  const searchHandler = async (searchTerm) => {
+    setSearchTerm(searchTerm);
+    if (searchTerm !== '') {
+      const res = await fetch(`https://silver-api.production.leadhome.io/api/suburbs?query=${searchTerm}`);
+      const data = await res.json();
+      setSuburbs(data.items);
     }
-    getData()
-  }, []);
-
-  const fetchData = async () => {
-    const res = await fetch('https://silver-api.production.leadhome.io/api/suburbs?query=bryan');
-    const data = await res.json();
-    return data;
   }
 
   const selectSuburb = (location) => {
-    const locationItem = suburbs.filter((suburb) => {
-      return suburb.suburb.toLowerCase().includes(location.toLowerCase());
-    })
-    if (location !== "") {
-      setLocationSuburb(locationItem[0]);
-    }
+    setSearchTerm(location);
   }
-  const searchHandler = (searchTerm) => {
-    setSearchTerm(searchTerm);
-    if (searchTerm !== "") {
-      const newSuburbsList = suburbs.filter((suburb) => {
-        return suburb.suburb.toLowerCase().includes(searchTerm.toLowerCase());
+
+  const selectedSuburb = (location) => {
+    if (location !== "") {
+      const locationItem = suburbs.filter((suburb) => {
+        return suburb.suburb.toLowerCase().includes(location.toLowerCase());
       })
-      setSearchResults(newSuburbsList);
-    } else {
-      setSearchResults(suburbs);
+      setLocationSuburb(locationItem[0]);
     }
   }
 
   return (
     <div className="App">
       <div className="header_title"><p>See if we're in your area</p></div>
-      <SearchbarDropdown suburbs={searchTerm.length < 1 ? suburbs : searchResults} term={searchTerm} searchKeyword={searchHandler} selectSuburb={selectSuburb} />
+      <SearchbarDropdown suburbs={suburbs} term={searchTerm} searchKeyword={searchHandler} selectSuburb={selectSuburb} selectedSuburb={selectedSuburb} />
       <GoogleMap locationSuburb={locationSuburb} />
     </div>
   );
